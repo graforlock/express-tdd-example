@@ -76,6 +76,12 @@ describe('Routes', () => {
       insertedArticles = await Article.find();
     });
 
+    it('should still work with incorrect pageSize/pageNumber', async () => {
+      const { body } = await supertest(server).get('/articles?pageSize=hello&pageNumber=world');
+
+      expect(body).toEqual(expect.any(Array));
+    });
+
     it('should get 10 articles on page 1 by default', async () => {
       const response = await supertest(server).get('/articles');
 
